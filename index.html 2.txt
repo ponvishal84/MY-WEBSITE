@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Improved SEO -->
+  <title>SmartStudy AI – Personalized Study Planner</title>
+  <meta name="description" content="Create your personalized study plan using SmartStudy AI. Enter your subjects, choose difficulty, and generate a custom schedule instantly.">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", Arial, sans-serif;
+      background: #eef1f7;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4a6cf7, #6f86ff);
+      color: white;
+      padding: 24px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: #2e3a59;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 20px;
+      transition: 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #4a6cf7;
+      outline: none;
+      box-shadow: 0 0 8px rgba(74,108,247,0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #4a6cf7;
+      color: white;
+      border: none;
+      font-size: 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #3754da;
+      transform: scale(1.02);
+    }
+
+    .output-box {
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 12px;
+      background: #f3f5ff;
+      font-size: 17px;
+      white-space: pre-line;
+      border: 1px solid #dce3ff;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* MOBILE RESPONSIVE UI */
+    @media (max-width: 600px) {
+      header {
+        font-size: 24px;
+        padding: 18px;
+      }
+      .container {
+        margin: 20px;
+        padding: 22px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+      button {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>SmartStudy AI – Demo</header>
+
+  <div class="container">
+    <h2>📘 Create Your Personalized Study Plan</h2>
+
+    <label>Enter Your Subjects:</label>
+    <textarea id="subjects" placeholder="Example: Math, Physics, English"></textarea>
+
+    <label>Hours Available Per Day:</label>
+    <input type="number" id="hours" placeholder="Example: 4" />
+
+    <label>Difficulty Level:</label>
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+
+    <button onclick="generatePlan()">Generate Study Plan</button>
+
+    <div class="output-box" id="output">Your plan will appear here...</div>
+  </div>
+
+<script>
+function generatePlan() {
+  const subjects = document.getElementById("subjects").value
+    .split(",")
+    .map(s => s.trim())
+    .filter(s => s !== "");
+
+  const hours = parseFloat(document.getElementById("hours").value);
+  const difficulty = document.getElementById("difficulty").value;
+
+  if (subjects.length === 0 || !hours) {
+    document.getElementById("output").innerText = ⚠️ Please fill out all fields.";
+    return;
+  }
+
+  let multiplier = difficulty === "easy" ? 0.8 : difficulty === "medium" ? 1 : 1.25;
+  let timePerSubject = (hours / subjects.length) * multiplier;
+
+  let plan = "📌 Your Personalized Study Plan:\n\n";
+  subjects.forEach(sub => {
+    plan += `• ${sub}: ${timePerSubject.toFixed(1)} hours/day\n`;
+  });
+
+  document.getElementById("output").innerText = plan;
+}
+</script>
+
+</body>
+</html>
